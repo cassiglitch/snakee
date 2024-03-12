@@ -51,51 +51,52 @@
         let isColliding = false;
         let collisionAnimationFrames = 10;
         let isPaused = false;
+function draw() {
+    // Clear the canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        function draw() {
-            // Clear the canvas
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Layer 1: Draw Invincibility Aura
+    if (isInvincible) {
+        drawInvincibilityAura();
+    }
 
-            // Draw Obstacles
-            ctx.fillStyle = 'black';
-            obstacles.forEach(obstacle => ctx.fillRect(obstacle.x * gridSize, obstacle.y * gridSize, gridSize, gridSize));
-
-            // Draw Dynamic Obstacles
-            ctx.fillStyle = 'grey';
-            dynamicObstacles.forEach(obstacle => {
-                ctx.fillRect(obstacle.x * gridSize, obstacle.y * gridSize, gridSize * 2, gridSize * 2);
-            });
-
-    // Draw Snake
+    // Layer 2: Draw Snake Body
     snake.forEach((segment, index) => {
         ctx.fillStyle = segment.color;
         ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize, gridSize);
-
-        // Draw orange shadow if the snake is invincible
-        if (isInvincible) {
-            const shadowSize = 8; // Adjust the size of the shadow
-            ctx.fillStyle = 'rgba(255, 165, 0, 0.3)'; // Orange color with transparency
-            ctx.fillRect(segment.x * gridSize - shadowSize, segment.y * gridSize - shadowSize, gridSize + shadowSize * 2, gridSize + shadowSize * 2);
-        }
     });
-            // Draw Snake Head (light green)
-            const head = snake[0];
-            ctx.fillStyle = 'lightgreen'; // Head color
-            ctx.fillRect(head.x * gridSize, head.y * gridSize, gridSize, gridSize);
 
-            // Draw Food
-            ctx.fillStyle = getFoodColor(food.type);
-            ctx.fillRect(food.x * gridSize, food.y * gridSize, gridSize, gridSize);
+    // Layer 3: Draw Snake Head
+    const head = snake[0];
+    ctx.fillStyle = 'lightgreen'; // Head color
+    ctx.fillRect(head.x * gridSize, head.y * gridSize, gridSize, gridSize);
 
-            // Draw Score
-            const scoreDisplay = document.getElementById('scoreDisplay');
-            scoreDisplay.textContent = `Score: ${score}`;
+    // Layer 4: Draw Eating Animation
+    if (isEating) {
+        drawEatingAnimation();
+    }
 
-            // Draw Eating Animation
-            if (isEating) {
-                drawEatingAnimation();
-            }
-            
+    // Layer 5: Draw Obstacles
+    ctx.fillStyle = 'black';
+    obstacles.forEach(obstacle => ctx.fillRect(obstacle.x * gridSize, obstacle.y * gridSize, gridSize, gridSize));
+
+    // Draw Dynamic Obstacles
+    ctx.fillStyle = 'grey';
+    dynamicObstacles.forEach(obstacle => {
+        ctx.fillRect(obstacle.x * gridSize, obstacle.y * gridSize, gridSize * 2, gridSize * 2);
+    });
+
+    // Draw Score
+    const scoreDisplay = document.getElementById('scoreDisplay');
+    scoreDisplay.textContent = `Score: ${score}`;
+}
+
+function drawInvincibilityAura() {
+    snake.forEach((segment, index) => {
+        const shadowSize = 8; // Adjust the size of the shadow
+        ctx.fillStyle = 'rgba(255, 165, 0, 0.3)'; // Orange color with transparency
+        ctx.fillRect(segment.x * gridSize - shadowSize, segment.y * gridSize - shadowSize, gridSize + shadowSize * 2, gridSize + shadowSize * 2);
+    });
 }
 
         function drawEatingAnimation() {
