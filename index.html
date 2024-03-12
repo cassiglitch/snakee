@@ -71,6 +71,10 @@ function draw() {
     ctx.fillStyle = 'lightgreen'; // Head color
     ctx.fillRect(head.x * gridSize, head.y * gridSize, gridSize, gridSize);
 
+    // Draw Food
+            ctx.fillStyle = getFoodColor(food.type);
+            ctx.fillRect(food.x * gridSize, food.y * gridSize, gridSize, gridSize);
+
     // Layer 4: Draw Eating Animation
     if (isEating) {
         drawEatingAnimation();
