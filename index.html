@@ -379,25 +379,30 @@ const canvasHeight = closestNumber(window.innerHeight, gridSize);
             canvas.height = canvasHeight;
         }
 
-        // Handle arrow key presses
-        document.addEventListener('keydown', event => {
-            if (!isPaused) {
-                switch (event.key) {
-                    case 'ArrowUp':
-                        direction = 'up';
-                        break;
-                    case 'ArrowDown':
-                        direction = 'down';
-                        break;
-                    case 'ArrowLeft':
-                        direction = 'left';
-                        break;
-                    case 'ArrowRight':
-                        direction = 'right';
-                        break;
-                }
-            }
-        });
+// Handle arrow key presses
+document.addEventListener('keydown', event => {
+    // Prevent default arrow key behavior (scrolling)
+    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
+        event.preventDefault();
+    }
+
+    if (!isPaused) {
+        switch (event.key) {
+            case 'ArrowUp':
+                direction = 'up';
+                break;
+            case 'ArrowDown':
+                direction = 'down';
+                break;
+            case 'ArrowLeft':
+                direction = 'left';
+                break;
+            case 'ArrowRight':
+                direction = 'right';
+                break;
+        }
+    }
+});
 
         // Handle touch events for mobile controls
         let touchStartX = 0;
