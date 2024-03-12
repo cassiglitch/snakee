@@ -370,14 +370,23 @@ function closestNumber(n, m) {
     return Math.abs(n - n1) < Math.abs(n - n2) ? n1 : n2;
 }
 
-        function resizeCanvas() {
-const canvasWidth = closestNumber(window.innerWidth, gridSize);
-const canvasHeight = closestNumber(window.innerHeight, gridSize);
+function resizeCanvas() {
+    const canvasWidth = closestNumber(window.innerWidth, gridSize);
+    const canvasHeight = closestNumber(window.innerHeight, gridSize);
 
-            // Set canvas width and height
-            canvas.width = canvasWidth;
-            canvas.height = canvasHeight;
-        }
+    // Set canvas width and height
+    canvas.width = canvasWidth;
+    canvas.height = canvasHeight;
+
+    // Adjust food position if it's out of bounds
+    if (food.x >= canvasWidth / gridSize) {
+        food.x = canvasWidth / gridSize - 1;
+    }
+    if (food.y >= canvasHeight / gridSize) {
+        food.y = canvasHeight / gridSize - 1;
+    }
+}
+
 
 // Handle arrow key presses
 document.addEventListener('keydown', event => {
