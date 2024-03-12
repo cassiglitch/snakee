@@ -66,11 +66,17 @@
                 ctx.fillRect(obstacle.x * gridSize, obstacle.y * gridSize, gridSize * 2, gridSize * 2);
             });
 
-            // Draw Snake
-            snake.forEach((segment, index) => {
-                ctx.fillStyle = segment.color;
-                ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize, gridSize);
-            });
+    // Draw Snake
+    snake.forEach((segment, index) => {
+        ctx.fillStyle = segment.color;
+        ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize, gridSize);
+
+        // Draw orange shadow if the snake is invincible
+        if (isInvincible) {
+            ctx.fillStyle = 'rgba(255, 165, 0, 0.3)'; // Orange color with transparency
+            ctx.fillRect(segment.x * gridSize - 2, segment.y * gridSize - 2, gridSize + 4, gridSize + 4);
+        }
+    });
 
             // Draw Snake Head (light green)
             const head = snake[0];
@@ -89,24 +95,8 @@
             if (isEating) {
                 drawEatingAnimation();
             }
-    // Draw Invincibility Aura
-    if (isInvincible) {
-        drawInvincibilityAura();
-    }
             
 }
-
-function drawInvincibilityAura() {
-    const head = snake[0];
-    const auraSize = 30; // Adjust the size of the aura
-    ctx.fillStyle = 'orange'; // Aura color
-    ctx.globalAlpha = 0.3; // Set the transparency level
-    ctx.beginPath();
-    ctx.arc((head.x + 0.5) * gridSize, (head.y + 0.5) * gridSize, auraSize, 0, 2 * Math.PI);
-    ctx.fill();
-    ctx.globalAlpha = 1; // Reset the transparency
-}
-
 
         function drawEatingAnimation() {
             const animationColor = 'rgba(0, 0, 255, 0.5)'; // Blue color with transparency
