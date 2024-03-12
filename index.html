@@ -73,7 +73,7 @@
 
         // Draw orange shadow if the snake is invincible
         if (isInvincible) {
-            const shadowSize = 6; // Adjust the size of the shadow
+            const shadowSize = 8; // Adjust the size of the shadow
             ctx.fillStyle = 'rgba(255, 165, 0, 0.3)'; // Orange color with transparency
             ctx.fillRect(segment.x * gridSize - shadowSize, segment.y * gridSize - shadowSize, gridSize + shadowSize * 2, gridSize + shadowSize * 2);
         }
