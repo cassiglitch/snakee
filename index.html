@@ -73,11 +73,11 @@
 
         // Draw orange shadow if the snake is invincible
         if (isInvincible) {
+            const shadowSize = 6; // Adjust the size of the shadow
             ctx.fillStyle = 'rgba(255, 165, 0, 0.3)'; // Orange color with transparency
-            ctx.fillRect(segment.x * gridSize - 2, segment.y * gridSize - 2, gridSize + 4, gridSize + 4);
+            ctx.fillRect(segment.x * gridSize - shadowSize, segment.y * gridSize - shadowSize, gridSize + shadowSize * 2, gridSize + shadowSize * 2);
         }
     });
-
             // Draw Snake Head (light green)
             const head = snake[0];
             ctx.fillStyle = 'lightgreen'; // Head color
