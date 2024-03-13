@@ -214,7 +214,7 @@ function HaHaNoCollision(duration) {
     direction = directions[randomIndex];
     HaHaNoCollision(10)
                 } else if (food.type === 'invincibility') {
-HaHaNoCollision(100)
+HaHaNoCollision(50)
                 } else {
                     score += 1;
                     snake.unshift({ ...snake[0], color: 'blue' });
@@ -251,7 +251,7 @@ HaHaNoCollision(100)
             });
 
             // Check for victory
-            if (score === 100) {
+            if (score === 50) {
                 declareVictory();
             }
         }
@@ -280,11 +280,11 @@ HaHaNoCollision(100)
         function generateFoodType() {
             // Adjust the probability for different types of food as needed
             const random = Math.random();
-            if (random <= 0.1) {
+            if (random === 0.1) {
                 return 'invincibility';
             } else if (random <= 0.2) {
                 return 'superfood';
-            } else if (random <= 0.19) {
+            } else if (random <= 0.4) {
                 return 'poison';
             } else if (random <= 0.3) {
                 return 'teleport';
