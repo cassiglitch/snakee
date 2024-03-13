@@ -25,6 +25,10 @@
             border: 1px solid #ddd;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow to the canvas */
         }
+        body {
+            overflow: hidden; /* Disable scrolling */
+            touch-action: none; /* Disable touch actions on the canvas */
+        }
     </style>
     <title>Snake Game</title>
 </head>
@@ -448,6 +452,22 @@ document.addEventListener('keydown', event => {
         window.addEventListener('beforeunload', () => {
             clearInterval(gameInterval);
         });
+                // Function to adjust the canvas position if moved
+        function adjustCanvasPosition() {
+            const canvas = document.getElementById('snakeCanvas');
+            const rect = canvas.getBoundingClientRect();
+
+            // Check if the canvas position is incorrect
+            if (rect.left !== 0 || rect.top !== 0) {
+                // Move the canvas back to the correct position
+                canvas.style.position = 'absolute';
+                canvas.style.left = '0px';
+                canvas.style.top = '0px';
+            }
+        }
+
+        // Call the adjustCanvasPosition function periodically
+        setInterval(adjustCanvasPosition, 1); // Adjust the interval as needed
     </script>
 </body>
 </html>
