@@ -108,7 +108,29 @@ function drawInvincibilityAura() {
         ctx.fillRect(segment.x * gridSize - shadowSize, segment.y * gridSize - shadowSize, gridSize + shadowSize * 2, gridSize + shadowSize * 2);
     });
 }
+let revertMode = false;
 
+// Event listener for key presses
+document.addEventListener('keydown', handleKeyPress);
+
+// Function to handle key presses
+function handleKeyPress(event) {
+    const PAUSE_KEY = 80; // P key
+
+    const keyPressed = event.keyCode;
+
+    if (keyPressed === PAUSE_KEY) {
+        if (!revertMode) {
+            // Save current game state
+            saveGameState();
+            // Enter revert mode
+            revertMode = true;
+        } else {
+            // Exit revert mode
+            revertMode = false;
+        }
+    }
+}
         function drawEatingAnimation() {
             const animationColor = 'rgba(0, 0, 255, 0.5)'; // Blue color with transparency
             const segmentSize = gridSize;
@@ -148,6 +170,32 @@ function drawInvincibilityAura() {
                     return 'orange';
             }
         }
+
+
+function saveGameState() {
+    gameStates.push({
+        snake: JSON.parse(JSON.stringify(snake)),
+        dx,
+        dy,
+        foodX,
+        foodY,
+        score
+    });
+}
+
+// Revert to the previous game state
+function revertToPreviousState() {
+    if (gameStates.length > 0) {
+        const previousState = gameStates.pop();
+        snake = previousState.snake;
+        dx = previousState.dx;
+        dy = previousState.dy;
+        foodX = previousState.foodX;
+        foodY = previousState.foodY;
+        score = previousState.score;
+        draw();
+    }
+}
 
 // Function to trigger invincibility
 function HaHaNoCollision(duration) {
@@ -328,8 +376,10 @@ HaHaNoCollision(50)
             restartGame();
         }
 
-        function gameLoop() {
-            resizeCanvas(); // Resize the canvas on every game loop iteration
+            function gameLoop() {
+    if (!gamePaused && !revertMode) {
+        // Normal game logic here
+                   resizeCanvas(); // Resize the canvas on every game loop iteration
             resizeCanvasHeight();
             update();
             draw();
@@ -353,6 +403,12 @@ HaHaNoCollision(50)
             }
         }
 
+    } else if (revertMode && gameStates.length > 0) {
+        // Revert to previous game state
+        revertToPreviousState();
+    }
+}
+ 
 function closestNumber(n, m) {
     // Find the quotient
     let q = Math.floor(n / m);
